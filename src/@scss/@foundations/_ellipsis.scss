@@ -1,0 +1,17 @@
+// **
+// * 行数による省略
+// * @param {Interger} $lines 表示する行数
+// * @param {Number} $line-height 計算に使用する行高
+// ************************************************ */
+@mixin ellipsis($lines, $line-height: $default-line-height) {
+  height: calc(#{$lines * 1em} * #{$line-height});
+  overflow: hidden;
+  line-height: $line-height;
+
+  @supports (-webkit-line-clamp: $lines) {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+  }
+}

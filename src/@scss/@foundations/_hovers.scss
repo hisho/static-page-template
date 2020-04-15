@@ -1,0 +1,60 @@
+@use 'hacks' as hack;
+@use 'variables' as variable;
+
+$hover-list: (
+  primary: (
+    prop: (
+      opacity: .6,
+    ),
+    duration: variable.$default-transition-duration,
+    delay: null,
+    easing: variable.$default-transition-easing
+  )
+);
+
+// hover
+//-------------------------------------------------------------
+@mixin _hover {
+  &:focus {
+    @content;
+  }
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+  @include hack.ie-hack {
+    &:hover, &:focus {
+      @content;
+    }
+  }
+}
+
+@mixin hover($key: null) {
+  @if(map-has-key($hover-list,$key)) {
+    $_keyValue: map-get($hover-list,$key);
+    $_prop: map-get($_keyValue,prop);
+    $_duration: map-get($_keyValue,duration);
+    $_delay: map-get($_keyValue,delay);
+    $_easing: map-get($_keyValue,easing);
+    $new_transition_array: ();
+    @each $_propName,$_propValue in $_prop {
+      @if(nth($_prop, length($_prop)) == ($_propName $_propValue)) {
+        $new_transition_array: append($new_transition_array, unquote('#{$_propName} #{$_duration} #{$_easing} #{$_delay}'));
+      } @else {
+        $new_transition_array: append($new_transition_array, unquote('#{$_propName} #{$_duration} #{$_easing} #{$_delay},'));
+      }
+    }
+    transition: $new_transition_array;
+    @include _hover {
+      @each $_propName,$_propValue in $_prop {
+        #{$_propName}: #{$_propValue}
+      }
+      @content;
+    }
+  } @else {
+    @include _hover {
+      @content;
+    }
+  }
+}

@@ -1,0 +1,207 @@
+/*!
+ * Swiper 5.3.1
+ * Most modern mobile touch slider and framework with hardware accelerated transitions
+ * http://swiperjs.com
+ *
+ * Copyright 2014-2020 Vladimir Kharlampidi
+ *
+ * Released under the MIT License
+ *
+ * Released on: February 8, 2020
+ */
+
+.swiper-container {
+  position: relative;
+  /* Fix of Webkit flickering */
+  z-index:1;
+  padding: 0;
+  margin-right: auto;
+  margin-left: auto;
+  overflow: hidden;
+  list-style: none;
+}
+.swiper-container-vertical > .swiper-wrapper {
+  flex-direction: column;
+}
+.swiper-wrapper {
+  position:relative;
+  z-index: 1;
+  box-sizing: content-box;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition-property:transform;
+}
+.swiper-container-android .swiper-slide,
+.swiper-wrapper {
+  transform:translate3d(0,0,0);
+}
+.swiper-container-multirow > .swiper-wrapper {
+  flex-wrap: wrap;
+}
+.swiper-container-multirow-column > .swiper-wrapper {
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+.swiper-container-free-mode > .swiper-wrapper {
+  margin: 0 auto;
+  transition-timing-function: ease-out;
+}
+.swiper-slide {
+  position: relative;
+  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  transition-property: transform;
+}
+.swiper-slide-invisible-blank {
+  visibility: hidden;
+}
+/* Auto Height */
+.swiper-container-autoheight {
+  &, .swiper-slide {
+    height: auto;
+  }
+
+  .swiper-wrapper {
+    align-items: flex-start;
+    transition-property: transform, height;
+  }
+}
+
+
+//.swiper-container-fade {
+//  &.swiper-container-free-mode {
+//    .swiper-slide {
+//      transition-timing-function: ease-out;
+//    }
+//  }
+//  .swiper-slide {
+//    pointer-events: none;
+//    transition-property: opacity;
+//    .swiper-slide {
+//      pointer-events: none;
+//    }
+//  }
+//  .swiper-slide-active {
+//    &, & .swiper-slide-active {
+//      pointer-events: auto;
+//    }
+//  }
+//}
+
+.swiper-pagination {
+  position: absolute;
+  z-index: 10;
+  text-align: center;
+  transition: 300ms opacity;
+  transform: translate3d(0,0,0);
+  &.swiper-pagination-hidden {
+    opacity: 0;
+  }
+}
+/* Common Styles */
+.swiper-pagination-fraction, .swiper-pagination-custom, .swiper-container-horizontal > .swiper-pagination-bullets{
+  bottom: 10px;
+  left: 0;
+  width: 100%;
+}
+/* Bullets */
+.swiper-pagination-bullets-dynamic {
+  overflow: hidden;
+  font-size: 0;
+  .swiper-pagination-bullet {
+    position: relative;
+    transform: scale(.33);
+  }
+  .swiper-pagination-bullet-active {
+    transform: scale(1);
+  }
+  .swiper-pagination-bullet-active-main {
+    transform: scale(1);
+  }
+  .swiper-pagination-bullet-active-prev {
+    transform: scale(.66);
+  }
+  .swiper-pagination-bullet-active-prev-prev {
+    transform: scale(.33);
+  }
+  .swiper-pagination-bullet-active-next {
+    transform: scale(.66);
+  }
+  .swiper-pagination-bullet-active-next-next {
+    transform: scale(.33);
+  }
+}
+.swiper-pagination-bullet {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #000;
+  border-radius: 100%;
+  opacity: .2;
+  @at-root button#{&} {
+    padding: 0;
+    margin: 0;
+    border: none;
+    box-shadow: none;
+    appearance: none;
+  }
+  .swiper-pagination-clickable & {
+    cursor: pointer;
+  }
+}
+.swiper-pagination-bullet-active {
+  opacity: 1;
+}
+
+.swiper-container-vertical {
+  > .swiper-pagination-bullets {
+    top: 50%;
+    right: 10px;
+    transform:translate3d(0,-50%,0);
+    .swiper-pagination-bullet {
+      display: block;
+      margin: 6px 0;
+    }
+    &.swiper-pagination-bullets-dynamic {
+      top: 50%;
+      width: 8px;
+      transform: translateY(-50%);
+      .swiper-pagination-bullet {
+        display: inline-block;
+        transition: 200ms transform, 200ms top;
+      }
+    }
+  }
+}
+.swiper-container-horizontal {
+  > .swiper-pagination-bullets {
+    .swiper-pagination-bullet {
+      margin: 0 4px;
+    }
+    &.swiper-pagination-bullets-dynamic {
+      left: 50%;
+      white-space: nowrap;
+      transform: translateX(-50%);
+      .swiper-pagination-bullet {
+        transition: 200ms transform, 200ms left;
+      }
+    }
+  }
+  &.swiper-container-rtl > .swiper-pagination-bullets-dynamic .swiper-pagination-bullet {
+    transition: 200ms transform, 200ms right;
+  }
+}
+
+.swiper-notification {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  clip-path: inset(100%);
+}

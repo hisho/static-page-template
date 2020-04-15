@@ -1,0 +1,72 @@
+@use 'functions' as function;
+
+//ブレークポイントの定義
+//-------------------------------------------------------------
+
+//メディアクエリの変数
+$breakpoints: (
+  xs: 600,
+  sm: 769,
+  md: 980,
+  lg: 1200,
+  xlg: 1366
+);
+
+//カンプのインナー横幅
+$wrapper-width: map-get($breakpoints, md );
+//スマホ時の左右のpadding
+$wrapper-padding: 15;
+
+/**
+ * $breakpointsの中の数値を@mediaに入れてemにして返すmixin
+ * @param  {array}  $breakpoint [sm]  $breakpointsのkeyのarray
+ * @param  {string} $key        [min] min or max
+ * @return {void}                     @media ($key-width) {}
+ */
+@mixin media($_breakpoints: sm, $_key: max) {
+  //$_breakpointsのError検出
+  @each $_has_breakpoint in $_breakpoints {
+    $_current_index: index($_breakpoints, $_has_breakpoint);
+    @if(map-has-key($breakpoints, $_has_breakpoint) == false) {
+      @error '第一引数の#{$_current_index}目の値#{$_has_breakpoint}は無効な値です。';
+    }
+  }
+  //$_keyがminかmaxかのError検出
+  $key_array: (min,max);
+  @if(index($key_array, $_key) == null) {
+    @error '第二引数#{$_key}は無効な値です。min or maxで指定してください。'
+  }
+
+  $_breakpoint-length: length($_breakpoints);
+  @if($_breakpoint-length == 1) {
+
+    $_first_breakpoint: nth($_breakpoints,1);
+    $_first_breakpoint_value: map_get($breakpoints,$_first_breakpoint);
+    @if ($_key == max) {
+      @media (#{$_key}-width: function.em($_first_breakpoint_value) - .0011) {
+        @content;
+      }
+    }
+    @if ($_key == min) {
+      @media (#{$_key}-width: function.em($_first_breakpoint_value)) {
+        @content;
+      }
+    }
+
+  } @else if($_breakpoint-length == 2) {
+
+    $_first_breakpoint: nth($_breakpoints,1);
+    $_second_breakpoint: nth($_breakpoints,2);
+    $_first_breakpoint_value: map_get($breakpoints,$_first_breakpoint);
+    $_second_breakpoint_value: map_get($breakpoints,$_second_breakpoint);
+    $_max_value: max($_first_breakpoint_value,$_second_breakpoint_value);
+    $_min_value: min($_first_breakpoint_value,$_second_breakpoint_value);
+
+    @media (min-width: function.em($_min_value)) and (max-width: function.em($_max_value) - .0011) {
+      @content;
+    }
+
+  } @else {
+    @error '第一引数は最大2つしか設定できません。'
+  }
+}

@@ -1,0 +1,21 @@
+@use 'functions' as function;
+@use 'colors' as color;
+@use 'fonts' as font;
+@use 'fontweight' as fontweight;
+@use 'breakpoints' as breakpoint;
+
+
+body {
+  //font-family: font.font(ja sans);
+  //font-weight: fontweight.font-weight(light);
+  //color: color.color(text black);
+}
+
+
+.wrapper {
+  //innerがサイドタッチしないように予めスマホ時の左右padding分設定
+  max-width: function.rem(breakpoint.$wrapper-width + (breakpoint.$wrapper-padding * 2));
+  padding: 0 function.rem(breakpoint.$wrapper-padding);
+  margin: 0 auto;
+  &--inner {}
+}

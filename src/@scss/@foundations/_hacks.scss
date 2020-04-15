@@ -1,0 +1,10 @@
+//IE用のブラウザハック
+//-------------------------------------------------------------
+@mixin ie-hack {
+  @at-root body.ie.windows & {
+    @content;
+  }
+  @at-root _:-ms-fullscreen, :root & {
+    @content;
+  }
+}

@@ -1,0 +1,50 @@
+@use 'colors' as _color;
+@use "z-index";
+@use "fonts" as _font;
+@use 'breakpoints' as _breakpoint;
+
+//rootに標示させる用
+:root {
+  // breakpoints
+  @each $key,$value in _breakpoint.$breakpoints {
+    --breakpoint-#{$key}: #{map-get(_breakpoint.$breakpoints, $key)};
+  }
+
+  // z-index
+  @each $key,$value in z-index.$z-index {
+    @each $deepKey,$deepValue in $value {
+      @if($deepValue == null) {
+        --z-index-#{"" + $key}: #{$value};
+      } @else {
+        --z-index-#{"" + $key}-#{"" + $deepKey}: #{$deepValue};
+      }
+    }
+  }
+
+  // 色
+  @each $key,$value in _color.$colors {
+    @each $deepKey,$deepValue in $value {
+      @if($deepValue == null) {
+        --color-primary-#{"" + $key}: #{$value};
+      } @else {
+        --color-#{"" + $key}-#{"" + $deepKey}: #{$deepValue};
+      }
+    }
+  }
+
+  // fonts
+  @each $key,$value in _font.$fonts {
+    @each $deepKey,$deepValue in $value {
+      --font-family-#{$key}-#{$deepKey}: #{$deepValue};
+    }
+  }
+}
+
+//JSにBreakpoints変数をエクスポートさせる。
+/* stylelint-disable */
+:export {
+  @each $key,$value in _breakpoint.$breakpoints {
+    #{$key}: map-get(_breakpoint.$breakpoints, $key);
+  }
+}
+/* stylelint-enable */

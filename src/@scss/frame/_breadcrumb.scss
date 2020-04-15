@@ -1,0 +1,13 @@
+.breadcrumb {
+  $this: &;
+  &--list {}
+  &--item {
+    &[aria-current="page"] #{$this}--text {
+    }
+  }
+  &--link {
+  }
+  &--text {
+
+  }
+}

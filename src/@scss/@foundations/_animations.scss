@@ -1,0 +1,25 @@
+// @keyframes 任意の名前 {
+//   0% {
+//       CSSプロパティ:値;
+//   }
+//   100% {
+//       CSSプロパティ:値;
+//   }
+// }
+
+// 呼び出し方
+// .animation {
+//   animation: 名前 終わるまでの秒数 変化の度合い ディレイ 繰り返す回数 再生方向 開始、終了のスタイル;
+// }
+
+// 【CSS3】@keyframes と animation 関連のまとめ
+// https://qiita.com/7968/items/1d999354e00db53bcbd8
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

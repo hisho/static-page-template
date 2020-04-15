@@ -1,0 +1,27 @@
+@use 'functions' as function;
+
+//色の定義
+//-------------------------------------------------------------
+$colors: (
+  white: #fff,
+  black: #000,
+  secondary: (
+    white: #fafafa,
+    black: #333
+  )
+);
+
+
+/**
+ * 色をmapから取得する関数です
+ * @param  {array}  $keys      配列
+ * @param  {number} $_opacity  0.0 ~ 1
+ * @return {map}               $colorsの任意のkey
+ */
+@function color($_keys,$_opacity: null) {
+  @if($_opacity != null) {
+    @return rgba(function.map-deep-get($colors, $_keys...),$_opacity)
+  } @else {
+    @return function.map-deep-get($colors, $_keys...)
+  }
+}

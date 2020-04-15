@@ -1,0 +1,11 @@
+{
+  "site": {
+    "name": "DEMO PAGE",
+    "url": "https://example.com/"
+  },
+  "page": {
+    "page_id": "1",
+    "title": "トップページ",
+    "description": "説明文"
+  }
+}

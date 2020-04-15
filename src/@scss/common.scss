@@ -1,0 +1,15 @@
+@forward './@foundations/fontface';
+@forward './@foundations/_css_variables';
+//↓↓↓↓↓↓ @pagesに@use ↓↓↓↓↓↓
+@use './@foundations/foundations' as *;
+//↑↑↑↑↑↑ @pagesに@use ↑↑↑↑↑↑
+@forward './@foundations/_reset';
+@forward './@foundations/_animations';
+@forward'./@foundations/_@base';
+
+//@import 'libs/**';
+@import 'frame/**';
+@import 'layouts/**';
+//@import "pages/**";
+@import 'objects/**';
+@import 'utilitys/**';

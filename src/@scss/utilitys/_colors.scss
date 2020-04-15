@@ -1,0 +1,27 @@
+@use '../@foundations/colors' as _color;
+
+// 色の便利クラスの生成
+// 使い方
+// _color-primary-white => color: #fff
+// _bg-primary--white => background-color: #fff
+// _color-text-black => color: #333
+// _bg-text-black => background-color: #333
+@each $key,$value in _color.$colors {
+  @each $deepKey,$deepValue in $value {
+    @if($deepValue == null) {
+      ._color-primary-#{"" + $key} {
+        color: _color.color($key) !important;
+      };
+      ._bg-primary-#{"" + $key} {
+        background-color: _color.color($key) !important;
+      };
+    } @else {
+      ._color-#{"" + $key}-#{"" + $deepKey} {
+        color: _color.color($deepKey) !important;
+      };
+      ._bg-#{"" + $key}-#{"" + $deepKey} {
+        background-color: _color.color($deepKey) !important;
+      };
+    }
+  }
+}

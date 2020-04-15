@@ -1,0 +1,35 @@
+<%
+addVersion =  () => {
+  return version;
+}
+picture = ($imageName, $ext, $altText = '', $hasSpImage = true, $breakpoint = 'sm', $lazy= true) => {
+  let $BREAK_POINT;
+  if($breakpoint === 'sm') $BREAK_POINT = `${769/16 - 0.011}em`
+  else if($breakpoint === 'xs') $BREAK_POINT = `${(600/16) - 0.011}em`
+  if ($hasSpImage) {
+    return `
+    <picture>
+      <source media="(max-width: ${$BREAK_POINT})" srcset="./assets/img/sp_${$imageName}.${$ext}${version} 1x, ./assets/img/sp_${$imageName}@2x.${$ext}${version} 2x">
+      <img class="img" src="./assets/img/${$imageName}.${$ext}${version}" srcset="./assets/img/${$imageName}.${$ext}${version} 1x, ./assets/img/${$imageName}@2x.${$ext}${version} 2x" alt="${$altText}" loading="lazy">
+    </picture>
+    `;
+  } else {
+    return `
+    <picture>
+      <img class="img" src="./assets/img/${$imageName}.${$ext}${version}" srcset="./assets/img/${$imageName}.${$ext}${version} 1x, ./assets/img/${$imageName}@2x.${$ext}${version} 2x" alt="${$altText}" loading="lazy">
+    </picture>
+    `;
+  }
+}
+%>
+
+<%
+const today = new Date(),
+        year = today.getFullYear(),
+        month = String(today.getMonth()+1).padStart(2, `0`),
+        day = String(today.getDate()).padStart(2, `0`),
+        hours = String(today.getHours()).padStart(2, `0`),
+        minutes = String(today.getMinutes()).padStart(2, `0`),
+        seconds = String(today.getSeconds()).padStart(2, `0`);
+const version = `?v=${year}${month}${day}${hours}${minutes}`;
+%>

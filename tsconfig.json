@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "downlevelIteration": true,
+    "target": "es5",
+    "incremental": true,
+    "module": "esnext",
+    "allowSyntheticDefaultImports": true,
+    "lib": [
+      "dom",
+      "es2019",
+      "dom.iterable"
+    ],
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "strictFunctionTypes": false,
+    "strictBindCallApply": false,
+    "strictPropertyInitialization": false,
+    "noImplicitThis": false
+  }
+}

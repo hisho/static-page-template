@@ -1,0 +1,134 @@
+/**
+ * 値が2つ以上の配列かどうか判定する関数
+ * @param  {array} $_list 配列か判定したい値
+ * @return {boole}        値が2つ以上の配列ならtrue
+ */
+@function is_array($_list) {
+  @return type-of($_list) == list or type-of($_list) == arglist;
+}
+
+/**
+ * 数値をremに変換する関数です
+ * @param  {Number} $target        remにしたい数値
+ * @param  {Number} $threshold [1] しきい値
+ * @return {Number}                数値にremが付いた数値を返します
+ */
+@function _rem($target, $threshold) {
+  @if(unit($target) != '') {
+    @error 'remにしたい数値に単位を付けないでください';
+  } @else if(unit($threshold) != '') {
+    @error 'しきい値に単位を付けないでください'
+  } @else if($target == 0) {
+    @return $target;
+  } @else {
+    @return ((($target / 16) * $threshold) * 1rem);
+  }
+}
+
+//第一引数に配列を渡すことが可能になった
+@function rem($target, $threshold: 1) {
+  @if(is_array($target)) {
+    $new_rem_array: ();
+    @each $target_item in $target {
+      $new_rem_array: append($new_rem_array, _rem($target_item, $threshold));
+    }
+    @return $new_rem_array;
+  } @else {
+    @return _rem($target,$threshold);
+  }
+}
+
+/**
+ * 数値をemに変換する関数です
+ * @param  {Number} $target           emにしたい数値
+ * @param  {Number} $parentValue [16] しきい値
+ * @return {Number}                   数値にremが付いた数値を返します
+ */
+@function _em($target, $parentValue) {
+  @if(unit($target) != '') {
+    @error 'emにしたい数値に単位を付けないでください';
+  } @else if(unit($parentValue) != '') {
+    @error '親要素の数値に単位を付けないでください'
+  } @else if($target == 0) {
+    @return $target;
+  } @else {
+    @return (($target / 16) * 1em);
+  }
+}
+
+//第一引数に配列を渡すことが可能になった
+@function em($target, $parentValue: 16) {
+  @if(is_array($target)) {
+    $new_em_array: ();
+    @each $target_item in $target {
+      $new_em_array: append($new_em_array, _em($target_item, $parentValue));
+    }
+    @return $new_em_array;
+  } @else {
+    @return _em($target,$parentValue);
+  }
+}
+
+
+/**
+ * 数値をpxに変換する関数です
+ * @param  {Number} $arget          pxにしたい数値
+ * @param  {Number} $threshold [1]  しきい値
+ * @return {Number}                 数値にpxが付いた数値を返します
+ */
+@function _px($target, $threshold) {
+  @if(unit($target) != '') {
+    @error 'pxにしたい数値に単位を付けないでください';
+  } @else if(unit($threshold) != '') {
+    @error 'しきい値に単位を付けないでください'
+  } @else if($target == 0) {
+    @return $target;
+  } @else {
+    @return (($target * $threshold) * 1px);
+  }
+}
+
+//第一引数に配列を渡すことが可能になった
+@function px($target, $threshold: 1) {
+  @if(is_array($target)) {
+    $new_px_array: ();
+    @each $target_item in $target {
+      $new_px_array: append($new_px_array, _px($target_item, $threshold));
+    }
+    @return $new_px_array;
+  } @else {
+    @return _px($target,$threshold);
+  }
+}
+
+/**
+ * line-heightが1の時と同じになるようにline-height分の差分を返す関数です
+ * @param  {Number} $lineHeight lineHeightの値
+ * @param  {Number} $fontSize   fontの値
+ * @return {Number}             差分の数値
+ */
+@function margin($_lineHeight, $_fontSize) {
+  @if(unit($_lineHeight) != '') {
+    @error 'line-heightに単位を付けないでください';
+  } @else if(unit($_fontSize) != '') {
+    @error 'font-sizeに単位を付けないでください';
+  } @else {
+    @return ($_fontSize * $_lineHeight - $_fontSize) / 2;
+  }
+}
+
+/**
+ * 深い階層のmapの値を取得して返す関数です。
+ * @param  {map} $map   map本体
+ * @param  {map} $keys  mapのkey
+ * @return {map}        指定したmapのkey
+ */
+@function map-deep-get($map, $keys...) {
+  @each $key in $keys {
+    @if (not map-has-key($map, $key)) {
+      @return null;
+    }
+    $map: map-get($map, $key);
+  }
+  @return $map;
+}
