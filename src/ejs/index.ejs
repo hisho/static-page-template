@@ -1,12 +1,13 @@
 <%
-  const param = {
-    title: 'TOP'
-  }
+const param = {
+  title: 'TOP',
+  path: './'
+}
 %>
-<%- include('./@include/_header', {param: param}) %>
+<%- include(`${param.path}@include/_header`, {param: param}) %>
 <body>
   <main class="main" id="main">
     <%- example.title %>
   </main>
 </body>
-<%- include('./@include/_footer', {param: param}) %>
+<%- include(`${param.path}@include/_footer`, {param: param}) %>
