@@ -1,3 +1,4 @@
+// tsの構文チェック設定
 {
   "compilerOptions": {
     "sourceMap": true,
